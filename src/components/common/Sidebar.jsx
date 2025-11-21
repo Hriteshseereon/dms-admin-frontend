@@ -6,7 +6,7 @@ export default function Sidebar() {
 
   return (
     <aside className="w-30 bg-gray-100 border-r p-4 h-screen ">
-      <h2 className="font-bold mb-4 text-lg">Modules bhai</h2>
+      <h2 className="font-bold mb-4 text-lg">Modules</h2>
       <ul className="space-y-2">
         {orgModules.map((m) => (
           <li key={m}>

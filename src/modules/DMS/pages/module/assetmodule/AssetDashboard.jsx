@@ -25,10 +25,10 @@ import {
 // JSON Data
 const dashboardJSON = {
   topCards: [
-    { title: "Total Purchase Contracts", value: 150, icon: "FileTextOutlined" },
-    { title: "Total Purchase Invoice", value: 95, icon: "DollarOutlined" },
-    { title: "Pending Orders", value: 20, icon: "ShoppingCartOutlined" },
-    { title: "Purchase Returns", value: 7, icon: "ReloadOutlined" },
+    { title: "Asset Category", value: 5, icon: "FileTextOutlined" },
+    { title: "Total Asset", value: 95, icon: "DollarOutlined" },
+    { title: "Asset On Maintenance", value: 10, icon: "ShoppingCartOutlined" },
+    { title: "Asset Depriciation", value: 7, icon: "ReloadOutlined" },
   ],
   contractsData: [
     { name: "Jan", value: 12 },
@@ -55,7 +55,7 @@ const dashboardJSON = {
     { name: "Other Reasons", value: 4 },
   ],
   quickActions: [
-    { title: "Purchase Order #567", subtitle: "Due Today", tag: "Pending" },
+    { title: "Purchase Order 567", subtitle: "Due Today", tag: "Pending" },
     {
       title: "Shipment #789",
       subtitle: "Expected: 03-Oct-2025",
@@ -113,7 +113,7 @@ export default function AssetDashboard() {
           <Card
             title={
               <span className="text-amber-700 font-bold">
-                Purchase Contracts Evolution
+                Asser Allocation
               </span>
             }
           >
@@ -137,7 +137,7 @@ export default function AssetDashboard() {
           <Card
             title={
               <span className="text-amber-700 font-bold">
-                Purchase Invoices Evolution
+                Asset Disposal
               </span>
             }
           >
@@ -160,7 +160,7 @@ export default function AssetDashboard() {
       </Row>
 
       {/* PieChart + Quick Actions */}
-      <Row gutter={16} className="mb-6">
+      {/* <Row gutter={16} className="mb-6">
         <Col span={12}>
           <Card
             title={
@@ -188,10 +188,10 @@ export default function AssetDashboard() {
                 </Pie>
                 <Tooltip />
               </PieChart>
-            </ResponsiveContainer>
+            </ResponsiveContainer> */}
 
             {/* Legend */}
-            <div className="flex space-x-12 mt-2 flex-nowrap overflow-auto">
+            {/* <div className="flex space-x-12 mt-2 flex-nowrap overflow-auto">
               {dashboardJSON.returnData.map((entry, index) => (
                 <div key={index} className="flex items-center">
                   <div
@@ -234,7 +234,7 @@ export default function AssetDashboard() {
             </Space>
           </Card>
         </Col>
-      </Row>
+      </Row> */}
     </div>
   );
 }
