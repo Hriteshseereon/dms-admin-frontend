@@ -117,6 +117,18 @@ const baseMenuItems = [
     icon: <BarChartOutlined />,
     required: "asset",
   },
+   {
+    isSection: true,
+    label: "Wealth Module",
+    required: "wealth",
+  },
+  {
+    key: "wealth-product",
+    label: "Wealth Master",
+    path: "/dms/wealthmodule",
+    icon: <BarChartOutlined />,
+    required: "wealth",
+  },
 ];
 
 const SidebarMenu = () => {

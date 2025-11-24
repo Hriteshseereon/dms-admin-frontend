@@ -51,7 +51,13 @@ export default function AddOrganisation() {
     location: "",
     type: "Main",
   };
-
+// list of available modules
+const modulesList = [
+  { id: "DMS", label: "DMS" },
+  { id: "AMS", label: "AMS" },
+  { id: "WMS", label: "WMS" },
+  { id: "HRMS", label: "HRMS" },
+];
   const [form, setForm] = useState({
     // Organisation Details
     registeredName: "",
@@ -84,6 +90,7 @@ export default function AddOrganisation() {
 
     // Misc
     remarks: "",
+    modules: [],
   });
 
   // Helpers to update nested values
@@ -139,7 +146,15 @@ export default function AddOrganisation() {
     // you can add more validations here
     return true;
   };
-
+const toggleModule = (moduleId) => {
+  setForm((p) => {
+    const has = p.modules.includes(moduleId);
+    return {
+      ...p,
+      modules: has ? p.modules.filter((m) => m !== moduleId) : [...p.modules, moduleId],
+    };
+  });
+};
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validate()) return;
@@ -684,6 +699,23 @@ export default function AddOrganisation() {
                       </div>
                     </div>
                   </div>
+                ))}
+              </div>
+            </section>
+                {/* Modules (checkboxes) */}
+            <section className="space-y-3">
+              <h2 className="text-lg font-semibold text-gray-800">Enable Modules</h2>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {modulesList.map((m) => (
+                  <label key={m.id} className="flex items-center gap-2 p-2 border rounded-lg cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={form.modules.includes(m.id)}
+                      onChange={() => toggleModule(m.id)}
+                      className="w-4 h-4"
+                    />
+                    <span className="text-sm text-gray-700">{m.label}</span>
+                  </label>
                 ))}
               </div>
             </section>
