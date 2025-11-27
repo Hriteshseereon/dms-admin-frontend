@@ -148,12 +148,12 @@ export default function Business() {
       width: 200,
       render: (text) => <span className="text-amber-800">{text}</span>,
     },
-    {
-      title: <span className="text-amber-700 font-semibold">Address</span>,
-      dataIndex: "address",
-      width: 200,
-      render: (text) => <span className="text-amber-800">{text}</span>,
-    },
+    // {
+    //   title: <span className="text-amber-700 font-semibold">Address</span>,
+    //   dataIndex: "address",
+    //   width: 200,
+    //   render: (text) => <span className="text-amber-800">{text}</span>,
+    // },
     {
       title: <span className="text-amber-700 font-semibold">Contact No</span>,
       dataIndex: "phoneNo",

@@ -49,7 +49,7 @@ export const PURCHASE_TAB_DEFINITIONS = [
   },
   {
     id: "return",
-    label: "Purchase Return",
+    label: "Return",
     path: "return",
     Icon: FaUndo,
   },

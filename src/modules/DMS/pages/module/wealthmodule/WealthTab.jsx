@@ -1,67 +1,32 @@
 import React, { useEffect, useMemo, useState } from "react";
+import './WealthTab.css'
 import { FaBoxOpen, FaFileInvoice, FaTachometerAlt } from "react-icons/fa";
 import { Tabs } from "antd";
 import { useNavigate, useLocation } from "react-router-dom";
 
-// import AssetCategory from "./AssetCategory";
-// import AssetAdd from "./AssetAdd";
-// import AssetAllocation from "./AssetAllocation";
-// import AssetMaintenance from "./AssetMaintenance";
-// import AssetDepreciation from "./AssetDepreciation";
-// import AssetDisposal from "./AssetDisposal";
 import WealthDashboard from "./WealthDashboard";
 import StockEtf from "./StockEtf";
+import MutualFunds from "./MutualFunds";
+import Bank from "./Bank";
+import Nps from "./Nps";
+import Privatequity from "./Privatequity";
+import Deposits from "./Deposits";
+import Gold from "./Gold";
+import Silver from "./Silver";
 
 export const ASSET_TAB_DEFINITIONS = [
-  {
-    id: "dashboard",
-    label: "Dashboard",
-    path: "dashboard",
-    Icon: FaTachometerAlt,
-    Component: WealthDashboard,
-  },
-  {
-    id: "stocketf",
-    label: "Stock & ETF",
-    path: "stocketf",
-    Icon: FaBoxOpen,
-    Component: StockEtf,
-  },
-//   {
-//     id: "assetadd",
-//     label: "Add",
-//     path: "assetadd",
-//     Icon: FaFileInvoice,
-//     Component: AssetAdd,
-//   },
-//   {
-//     id: "assetallocation",
-//     label: "Allocation",
-//     path: "assetallocation",
-//     Icon: FaFileInvoice,
-//     Component: AssetAllocation,
-//   },
-//    {
-//     id: "assetmaintenance",
-//     label: "Maintenance",
-//     path: "assetmaintenance",
-//     Icon: FaFileInvoice,
-//     Component: AssetMaintenance,
-//   },
-//    {
-//     id: "assetdepreciation",
-//     label: "Depreciation",
-//     path: "assetdepreciation",
-//     Icon: FaFileInvoice,
-//     Component: AssetDepreciation,
-//   },
-//   {
-//     id: "assetdisposal",
-//     label: "Disposal",
-//     path: "assetdisposal",
-//     Icon: FaFileInvoice,
-//     Component: AssetDisposal,
-//   },
+  { id: "dashboard", label: "Dashboard", path: "dashboard", Icon: FaTachometerAlt, Component: WealthDashboard },
+  { id: "stocketf", label: "Stock & ETF", path: "stocketf", Icon: FaBoxOpen, Component: StockEtf },
+  { id: "mutualfunds", label: "Mutualfunds", path: "mutualfunds", Icon: FaFileInvoice, Component: MutualFunds },
+  { id: "bank", label: "Bank", path: "bank", Icon: FaFileInvoice, Component: Bank },
+  { id: "nps", label: "Nps&Ulip", path: "nps", Icon: FaFileInvoice, Component: Nps },
+  { id: "privatequity", label: "Privatequity", path: "privatequity", Icon: FaFileInvoice, Component: Privatequity },
+  { id: "deposits", label: "Deposits", path: "deposits", Icon: FaFileInvoice, Component: Deposits },
+  { id: "gold", label: "Gold", path: "gold", Icon: FaFileInvoice, Component: Gold },
+  
+  { id: "silver", label: "Silver", path: "silver", Icon: FaFileInvoice, Component: Silver },
+
+  // additional tabs can be pushed here...
 ];
 
 const normalize = (values = []) =>
@@ -85,12 +50,10 @@ const WealthTab = ({ allowedTabs }) => {
 
   const defaultTab = visibleTabs[0];
 
-  // Get last path segment and treat module base 'assetmodule' as the empty segment
   const currentSegment = useMemo(() => {
     const cleanedPath = location.pathname.replace(/\/+$/, "");
     const parts = cleanedPath.split("/");
     const lastPart = parts[parts.length - 1] || "";
-    // if the route is /dms/assetmodule treat it as the base tab ("")
     return lastPart === "wealthmodule" ? "" : lastPart;
   }, [location.pathname]);
 
@@ -104,21 +67,17 @@ const WealthTab = ({ allowedTabs }) => {
     return match.id;
   }, [currentSegment, defaultTab, visibleTabs]);
 
-  // controlled Tabs active key
   const [activeKey, setActiveKey] = useState(derivedActiveTab);
 
-  // Keep activeKey in sync with route-derived tab
   useEffect(() => {
     if (derivedActiveTab !== activeKey) {
       setActiveKey(derivedActiveTab);
     }
 
-    // ensure the URL reflects the derivedActiveTab (only navigate when different)
     const tabObj = visibleTabs.find((t) => t.id === derivedActiveTab) ?? defaultTab;
     const destination = tabObj.path === "" ? "/dms/wealthmodule" : `/dms/wealthmodule/${tabObj.path}`;
 
     if (location.pathname !== destination) {
-      // use replace on initial sync to avoid extra history entry if you prefer:
       navigate(destination, { replace: false });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -129,7 +88,6 @@ const WealthTab = ({ allowedTabs }) => {
     if (!selected) return;
     setActiveKey(key);
     const destination = selected.path === "" ? "/dms/wealthmodule" : `/dms/wealthmodule/${selected.path}`;
-    // navigate on user click
     navigate(destination);
   };
 
@@ -140,7 +98,7 @@ const WealthTab = ({ allowedTabs }) => {
       key: tab.id,
       label: (
         <>
-          <Icon className="inline mr-2 text-amber-500" />{" "}
+          <Icon className="inline mr-2 text-amber-500" />
           <span className="text-amber-500">{tab.label}</span>
         </>
       ),
@@ -152,12 +110,16 @@ const WealthTab = ({ allowedTabs }) => {
     <div className="p-2 mt-4 h-[625px] w-full overflow-auto rounded">
       <h1 className="text-2xl font-bold text-amber-800 mb-0">Asset Module</h1>
       <p className="text-amber-700 mb-3">Manage your asset data</p>
-      <div className="overflow-auto">
+
+      {/* wrap the Tabs in a wrapper we can target for CSS */}
+      <div className="overflow-auto wealth-tabs">
         <Tabs
           activeKey={activeKey}
           onChange={handleChange}
           items={tabItems}
           destroyInactiveTabPane={false}
+          // optionally control the tab bar style container (keeps default ant styling)
+          tabBarStyle={{ paddingRight: 8 }}
         />
       </div>
     </div>
