@@ -1,0 +1,88 @@
+/* WealthTab: wrap the tab list, 8 tabs per row */
+.wealth-tabs .ant-tabs-nav-list {
+  display: flex;
+  flex-wrap: wrap;           /* allow rows */
+  align-items: stretch;
+}
+
+/* Force each tab to take 1/8th of the width so after 8 it wraps */
+.wealth-tabs .ant-tabs-tab {
+  flex: 0 0 calc(100% / 8);
+  max-width: calc(100% / 8);
+  box-sizing: border-box;
+  padding: 8px 12px;         /* adjust spacing as needed */
+}
+
+/* Make active tab and hover still look correct (keeps ant styles) */
+.wealth-tabs .ant-tabs-tab-btn {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  width: 100%;
+}
+
+/* Responsive: fewer columns on smaller screens */
+@media (max-width: 1200px) {
+  .wealth-tabs .ant-tabs-tab {
+    flex: 0 0 calc(100% / 6);
+    max-width: calc(100% / 6);
+  }
+}
+
+@media (max-width: 900px) {
+  .wealth-tabs .ant-tabs-tab {
+    flex: 0 0 calc(100% / 4);
+    max-width: calc(100% / 4);
+  }
+}
+
+@media (max-width: 640px) {
+  .wealth-tabs .ant-tabs-tab {
+    flex: 0 0 calc(100% / 2);
+    max-width: calc(100% / 2);
+  }
+}
+/* tabs underlying style */
+/* Hide Ant Design's ink bar (it misbehaves when nav wraps) */
+.wealth-tabs .ant-tabs-ink-bar {
+  display: none !important;
+}
+
+/* Give each active tab its own underline */
+/* Make sure the tab button is positioned so the pseudo-element sits correctly */
+.wealth-tabs .ant-tabs-tab-btn {
+  position: relative;
+  display: inline-block;    /* keep label layout sane */
+  padding-bottom: 8px;      /* reserve space for underline */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Simple static underline on active tab */
+/* .wealth-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  border-bottom: 3px solid #1890ff;   
+  padding-bottom: 5px;               
+} */
+
+/* ----- OR: Animated underline using a pseudo-element ----- */
+/* Comment out the simple border rule above if you use the animated version */
+
+.wealth-tabs .ant-tabs-tab-btn::after {
+  content: "";
+  position: absolute;
+  left: 12px;               /* matches the horizontal spacing you want */
+  right: 12px;
+  bottom: 0;
+  height: 3px;
+  background: #1890ff;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 220ms cubic-bezier(.2,.8,.2,1);
+  pointer-events: none;
+}
+
+.wealth-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn::after {
+  transform: scaleX(1);
+}

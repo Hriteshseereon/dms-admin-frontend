@@ -87,7 +87,7 @@ const iconMap = {
 // Amber palette
 const COLORS = ["#d97706", "#f59e0b", "#fbbf24", "#fcd34d"];
 
-export default function AssetDashboard() {
+export default function WealthDashboard() {
   return (
     <div className="p-2">
       {/* Top Cards */}

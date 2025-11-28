@@ -7,6 +7,7 @@ import DMS from "../modules/DMS";
 import AMS from "../modules/AMS";
 import OrganizationDashboard from "../pages/OrganizationDashboard";
 import OrganizationList from "../pages/OrganizationList";
+import AddOrganisation from "../pages/AddOrganisation";
 export default function AppRouter() {
   const { user } = useAuth();
 
@@ -34,6 +35,7 @@ export default function AppRouter() {
           path="/organizations"
           element={user ? <OrganizationList /> : <Navigate to="/" />}
         />
+        <Route path="/organisation/add" element={<AddOrganisation />}/>
 
         {/* Organization specific dashboard */}
         <Route
@@ -41,6 +43,7 @@ export default function AppRouter() {
           element={user ? <OrganizationDashboard /> : <Navigate to="/" />}
         />
         <Route path="/organization" element={<OrganizationDashboard />} />
+
         {/* DMS (protected) */}
 
         <Route path="/dms/*" element={user ? <DMS /> : <Navigate to="/" />} />

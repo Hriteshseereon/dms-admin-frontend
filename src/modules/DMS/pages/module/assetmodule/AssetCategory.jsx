@@ -131,16 +131,16 @@ export default function AssetCategory() {
       width: 120,
       render: (t) => <span className="text-amber-800">{t} years</span>,
     },
-    {
-      title: (
-        <span className="text-amber-700 font-semibold">
-          Default Depreciation Method
-        </span>
-      ),
-      dataIndex: "defaultDepreciationMethod",
-      width: 180,
-      render: (t) => <span className="text-amber-800">{t}</span>,
-    },
+    // {
+    //   title: (
+    //     <span className="text-amber-700 font-semibold">
+    //       Default Depreciation Method
+    //     </span>
+    //   ),
+    //   dataIndex: "defaultDepreciationMethod",
+    //   width: 180,
+    //   render: (t) => <span className="text-amber-800">{t}</span>,
+    // },
     {
       title: (
         <span className="text-amber-700 font-semibold">

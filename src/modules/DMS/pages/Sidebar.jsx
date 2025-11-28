@@ -100,7 +100,7 @@ const baseMenuItems = [
   },
   {
     key: "master-reason",
-    label: "Reason Master",
+    label: "Region Master",
     path: "/dms/master/reason",
     icon: <QuestionCircleOutlined />,
     required: "master",
@@ -116,6 +116,18 @@ const baseMenuItems = [
     path: "/dms/assetmodule",
     icon: <BarChartOutlined />,
     required: "asset",
+  },
+   {
+    isSection: true,
+    label: "Wealth Module",
+    required: "wealth",
+  },
+  {
+    key: "wealth-product",
+    label: "Wealth Master",
+    path: "/dms/wealthmodule",
+    icon: <BarChartOutlined />,
+    required: "wealth",
   },
 ];
 

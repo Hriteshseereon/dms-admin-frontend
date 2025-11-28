@@ -263,12 +263,12 @@ export default function ItemMaster() {
       width: 200,
       render: (text) => <span className="text-amber-800">{text}</span>,
     },
-    {
-      title: <span className="text-amber-700 font-semibold">Company Name</span>,
-      dataIndex: "companyName",
-      width: 200,
-      render: (text) => <span className="text-amber-800">{text}</span>,
-    },
+    // {
+    //   title: <span className="text-amber-700 font-semibold">Company Name</span>,
+    //   dataIndex: "companyName",
+    //   width: 200,
+    //   render: (text) => <span className="text-amber-800">{text}</span>,
+    // },
     {
       title: <span className="text-amber-700 font-semibold">Group Name</span>,
       dataIndex: "groupName",
@@ -295,21 +295,21 @@ export default function ItemMaster() {
       width: 100,
       render: (value) => <span className="text-amber-800">₹ {value}</span>,
     },
-    {
-      title: (
-        <span className="text-amber-700 font-semibold">
-          All Taxes (%)(gst,cst,eTax)
-        </span>
-      ),
-      align: "right",
-      width: 120,
-      render: (record) => {
-        const gst = parseFloat(record.gst || 0);
-        const cst = parseFloat(record.cst || 0);
-        const etax = parseFloat(record.etax || 0);
-        return <span className="text-amber-800">{(gst + cst + etax).toFixed(2)}</span>;
-      },
-    },
+    // {
+    //   title: (
+    //     <span className="text-amber-700 font-semibold">
+    //       All Taxes (%)(gst,cst,eTax)
+    //     </span>
+    //   ),
+    //   align: "right",
+    //   width: 120,
+    //   render: (record) => {
+    //     const gst = parseFloat(record.gst || 0);
+    //     const cst = parseFloat(record.cst || 0);
+    //     const etax = parseFloat(record.etax || 0);
+    //     return <span className="text-amber-800">{(gst + cst + etax).toFixed(2)}</span>;
+    //   },
+    // },
     {
       title: <span className="text-amber-700 font-semibold">Actions</span>,
       align: "center",

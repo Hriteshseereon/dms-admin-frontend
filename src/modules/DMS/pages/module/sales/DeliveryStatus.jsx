@@ -244,7 +244,7 @@ export default function DeliveryStatus() {
         </Form.Item>
       </Col>
 
-      <Col span={6}>
+      {/* <Col span={6}>
         <Form.Item label="Item Name" name="itemName">
           <Input disabled />
         </Form.Item>
@@ -253,9 +253,9 @@ export default function DeliveryStatus() {
         <Form.Item label="Item Code" name="itemCode">
           <Input disabled />
         </Form.Item>
-      </Col>
+      </Col> */}
 
-      <Col span={6}>
+      {/* <Col span={6}>
         <Form.Item label="Quantity" name="quantity">
           <InputNumber className="w-full" disabled />
         </Form.Item>
@@ -265,7 +265,7 @@ export default function DeliveryStatus() {
         <Form.Item label="UOM" name="uom">
           <Input disabled />
         </Form.Item>
-      </Col>
+      </Col> */}
 
       <Col span={6}>
         <Form.Item label="Total Amount" name="totalAmount">
