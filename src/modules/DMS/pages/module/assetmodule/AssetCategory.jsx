@@ -101,12 +101,12 @@ export default function AssetCategory() {
   };
 
   const columns = [
-    {
-      title: <span className="text-amber-700 font-semibold">Category ID</span>,
-      dataIndex: "categoryId",
-      width: 120,
-      render: (t) => <span className="text-amber-800">{t}</span>,
-    },
+    // {
+    //   title: <span className="text-amber-700 font-semibold">Category ID</span>,
+    //   dataIndex: "categoryId",
+    //   width: 120,
+    //   render: (t) => <span className="text-amber-800">{t}</span>,
+    // },
     {
       title: (
         <span className="text-amber-700 font-semibold">Category Name</span>
@@ -181,7 +181,7 @@ export default function AssetCategory() {
     <>
       <h6 className="text-amber-500 mb-3">Category Information</h6>
       <Row gutter={16}>
-        <Col span={8}>
+        {/* <Col span={8}>
           <Form.Item
             label="Category ID"
             name="categoryId"
@@ -189,7 +189,7 @@ export default function AssetCategory() {
           >
             <Input placeholder="Enter Category ID" disabled={disabled} />
           </Form.Item>
-        </Col>
+        </Col> */}
         <Col span={8}>
           <Form.Item
             label="Category Name"
