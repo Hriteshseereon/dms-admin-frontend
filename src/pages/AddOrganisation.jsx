@@ -1,4 +1,3 @@
-// AddOrganisation.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -19,7 +18,7 @@ import dayjs from "dayjs";
  * AddOrganisation.jsx
  * - Matches the OrganizationList styling
  * - Sectioned form for Organisation / Owner / Business / Branch / Depo(Godown)
- * - Branch and Depo sections are repeatable (add/remove)
+ * - Branch, Depo and Owner Members sections are repeatable (add/remove)
  *
  * NOTE: replace the final handleSubmit payload send with your API or context call.
  */
@@ -51,13 +50,22 @@ export default function AddOrganisation() {
     location: "",
     type: "Main",
   };
-// list of available modules
-const modulesList = [
-  { id: "DMS", label: "DMS" },
-  { id: "AMS", label: "AMS" },
-  { id: "WMS", label: "WMS" },
-  { id: "HRMS", label: "HRMS" },
-];
+
+  const initialMember = {
+    name: "",
+    email: "",
+    din: "",
+    sharePercent: "",
+  };
+
+  // list of available modules
+  const modulesList = [
+    { id: "DMS", label: "DMS" },
+    { id: "AMS", label: "AMS" },
+    { id: "WMS", label: "WMS" },
+    { id: "HRMS", label: "HRMS" },
+  ];
+
   const [form, setForm] = useState({
     // Organisation Details
     registeredName: "",
@@ -66,11 +74,14 @@ const modulesList = [
     email: "",
     organisationType: "",
 
-    // Owner Details
+    // Owner (primary contact) - kept for backward compatibility
     ownerName: "",
     ownerAddress: "",
     ownerPhone: "",
     ownerEmail: "",
+
+    // Owner Members - repeatable partner/member entries
+    members: [initialMember],
 
     // Business Details
     tinNo: "",
@@ -94,8 +105,7 @@ const modulesList = [
   });
 
   // Helpers to update nested values
-  const setField = (key, value) =>
-    setForm((p) => ({ ...p, [key]: value }));
+  const setField = (key, value) => setForm((p) => ({ ...p, [key]: value }));
 
   const updateBranch = (idx, key, value) =>
     setForm((p) => {
@@ -104,8 +114,7 @@ const modulesList = [
       return { ...p, branches };
     });
 
-  const addBranch = () =>
-    setForm((p) => ({ ...p, branches: [...p.branches, initialBranch] }));
+  const addBranch = () => setForm((p) => ({ ...p, branches: [...p.branches, initialBranch] }));
 
   const removeBranch = (idx) =>
     setForm((p) => {
@@ -120,13 +129,28 @@ const modulesList = [
       return { ...p, depos };
     });
 
-  const addDepo = () =>
-    setForm((p) => ({ ...p, depos: [...p.depos, initialDepo] }));
+  const addDepo = () => setForm((p) => ({ ...p, depos: [...p.depos, initialDepo] }));
 
   const removeDepo = (idx) =>
     setForm((p) => {
       const depos = p.depos.filter((_, i) => i !== idx);
       return { ...p, depos: depos.length ? depos : [initialDepo] };
+    });
+
+  // Members handlers (repeatable owner/partner entries)
+  const updateMember = (idx, key, value) =>
+    setForm((p) => {
+      const members = [...p.members];
+      members[idx] = { ...members[idx], [key]: value };
+      return { ...p, members };
+    });
+
+  const addMember = () => setForm((p) => ({ ...p, members: [...p.members, initialMember] }));
+
+  const removeMember = (idx) =>
+    setForm((p) => {
+      const members = p.members.filter((_, i) => i !== idx);
+      return { ...p, members: members.length ? members : [initialMember] };
     });
 
   const validate = () => {
@@ -143,18 +167,29 @@ const modulesList = [
       message.error("Please provide Email Address");
       return false;
     }
-    // you can add more validations here
+
+    // If members are provided, do a quick validation on each (name + email)
+    for (let i = 0; i < form.members.length; i++) {
+      const m = form.members[i];
+      if (m.name?.trim() && !m.email?.trim()) {
+        message.error(`Member #${i + 1}: please provide email for ${m.name}`);
+        return false;
+      }
+    }
+
     return true;
   };
-const toggleModule = (moduleId) => {
-  setForm((p) => {
-    const has = p.modules.includes(moduleId);
-    return {
-      ...p,
-      modules: has ? p.modules.filter((m) => m !== moduleId) : [...p.modules, moduleId],
-    };
-  });
-};
+
+  const toggleModule = (moduleId) => {
+    setForm((p) => {
+      const has = p.modules.includes(moduleId);
+      return {
+        ...p,
+        modules: has ? p.modules.filter((m) => m !== moduleId) : [...p.modules, moduleId],
+      };
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validate()) return;
@@ -182,12 +217,8 @@ const toggleModule = (moduleId) => {
         <div className="bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden">
           <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-gray-800">
-                Add Organisation
-              </h1>
-              <p className="text-sm text-gray-500 mt-1">
-                Fill in organisation, owner, business and branch details
-              </p>
+              <h1 className="text-2xl font-bold text-gray-800">Add Organisation</h1>
+              <p className="text-sm text-gray-500 mt-1">Fill in organisation, owner, business and branch details</p>
             </div>
             <div className="flex items-center gap-3">
               <button
@@ -269,13 +300,12 @@ const toggleModule = (moduleId) => {
                     onChange={(e) => setField("organisationType", e.target.value)}
                   >
                     <option value="">Select Type</option>
-                    <option>Real Estate</option>
-                    <option>Distribution</option>
-                    <option>Transport</option>
-                    <option>Investment</option>
-                    <option>Trading</option>
-                    <option>Property</option>
-                    <option>Other</option>
+                    <option value="pvt">Private Limited (Pvt Ltd)</option>
+                    <option value="llp">LLP</option>
+                    <option value="sole">Sole Proprietorship</option>
+                    <option value="partnership">Partnership</option>
+                    <option value="proprietor">Proprietor</option>
+                    <option value="other">Other</option>
                   </select>
                 </div>
               </div>
@@ -283,23 +313,34 @@ const toggleModule = (moduleId) => {
 
             {/* Owner Details */}
             <section className="space-y-3">
-              <h2 className="text-lg font-semibold text-gray-800">Owner Details</h2>
+              <div className="flex items-center justify-between">
+                <h2 className="text-lg font-semibold text-gray-800">Owner / Members</h2>
+                <button
+                  type="button"
+                  onClick={addMember}
+                  className="flex items-center gap-2 text-amber-700 font-semibold"
+                >
+                  <Plus size={16} />
+                  Add Member
+                </button>
+              </div>
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm text-gray-700 mb-1">Name</label>
+                  <label className="block text-sm text-gray-700 mb-1">Primary Contact Name</label>
                   <div className="relative">
                     <User className="absolute left-3 top-3 text-gray-400" size={18} />
                     <input
                       className="w-full pl-11 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-amber-500 outline-none"
                       value={form.ownerName}
                       onChange={(e) => setField("ownerName", e.target.value)}
-                      placeholder="Owner / Proprietor Name"
+                      placeholder="Owner / Primary Contact"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm text-gray-700 mb-1">Phone Number</label>
+                  <label className="block text-sm text-gray-700 mb-1">Primary Contact Phone</label>
                   <div className="relative">
                     <Phone className="absolute left-3 top-3 text-gray-400" size={18} />
                     <input
@@ -312,17 +353,7 @@ const toggleModule = (moduleId) => {
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="block text-sm text-gray-700 mb-1">Address</label>
-                  <textarea
-                    className="w-full pl-3 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-amber-500 outline-none min-h-[64px]"
-                    value={form.ownerAddress}
-                    onChange={(e) => setField("ownerAddress", e.target.value)}
-                    placeholder="Owner address"
-                  />
-                </div>
-
-                <div className="md:col-span-2">
-                  <label className="block text-sm text-gray-700 mb-1">Email Address</label>
+                  <label className="block text-sm text-gray-700 mb-1">Primary Contact Email</label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-3 text-gray-400" size={18} />
                     <input
@@ -333,18 +364,80 @@ const toggleModule = (moduleId) => {
                       placeholder="owner@example.com"
                     />
                   </div>
-                  <label className="block text-sm text-gray-700 mb-1">Email Password</label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-3 text-gray-400" size={18} />
-                    <input
-                      type="email"
-                      className="w-full pl-11 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-amber-500 outline-none"
-                      value={form.ownerEmail}
-                      onChange={(e) => setField("ownerEmail", e.target.value)}
-                      placeholder="********"
-                    />
-                  </div>
                 </div>
+
+                <div className="md:col-span-2">
+                  <label className="block text-sm text-gray-700 mb-1">Primary Contact Address</label>
+                  <textarea
+                    className="w-full pl-3 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-amber-500 outline-none min-h-[64px]"
+                    value={form.ownerAddress}
+                    onChange={(e) => setField("ownerAddress", e.target.value)}
+                    placeholder="Owner address"
+                  />
+                </div>
+              </div>
+
+              {/* Members repeatable list */}
+              <div className="space-y-4">
+                {form.members.map((m, i) => (
+                  <div key={i} className="p-4 border rounded-lg bg-amber-50/40 relative">
+                    {form.members.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => removeMember(i)}
+                        className="absolute right-3 top-3 text-gray-500 hover:text-gray-700"
+                        title="Remove member"
+                      >
+                        <X size={16} />
+                      </button>
+                    )}
+
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+                      <div>
+                        <label className="text-sm text-gray-700 mb-1 block">Partner / Member Name</label>
+                        <input
+                          className="w-full pl-3 pr-3 py-2 border rounded-lg"
+                          value={m.name}
+                          onChange={(e) => updateMember(i, "name", e.target.value)}
+                          placeholder="Partner name"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="text-sm text-gray-700 mb-1 block">Email</label>
+                        <input
+                          type="email"
+                          className="w-full pl-3 pr-3 py-2 border rounded-lg"
+                          value={m.email}
+                          onChange={(e) => updateMember(i, "email", e.target.value)}
+                          placeholder="partner@example.com"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="text-sm text-gray-700 mb-1 block">DIN / Identifier</label>
+                        <input
+                          className="w-full pl-3 pr-3 py-2 border rounded-lg"
+                          value={m.din}
+                          onChange={(e) => updateMember(i, "din", e.target.value)}
+                          placeholder="DIN / ID"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="text-sm text-gray-700 mb-1 block">Share %</label>
+                        <input
+                          type="number"
+                          step="0.01"
+                          className="w-full pl-3 pr-3 py-2 border rounded-lg"
+                          value={m.sharePercent}
+                          onChange={(e) => updateMember(i, "sharePercent", e.target.value)}
+                          placeholder="e.g. 25"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </section>
 
@@ -702,7 +795,8 @@ const toggleModule = (moduleId) => {
                 ))}
               </div>
             </section>
-                {/* Modules (checkboxes) */}
+
+            {/* Modules (checkboxes) */}
             <section className="space-y-3">
               <h2 className="text-lg font-semibold text-gray-800">Enable Modules</h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
