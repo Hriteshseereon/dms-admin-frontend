@@ -459,7 +459,7 @@ export default function SaleOrdersInvoice() {
                   </Form.Item> */}
 
                   {/* souda template select - auto-fill items if chosen */}
-                  <Form.Item label="Use Souda" name={[cf.name, "useSouda"]} fieldKey={[cf.fieldKey, "useSouda"]} style={{ marginBottom: 0 }}>
+                  <Form.Item label="Contract ID" name={[cf.name, "useSouda"]} fieldKey={[cf.fieldKey, "useSouda"]} style={{ marginBottom: 0 }}>
                     <Select
                       placeholder="Select Souda"
                       style={{ width: 220 }}
@@ -695,6 +695,13 @@ export default function SaleOrdersInvoice() {
             </Select>
           </Form.Item>
         </Col>
+         <Col span={6}>
+          <Form.Item label={<span className="text-amber-700">Status</span>} name="status">
+            <Select placeholder="pending" disabled={disabled}>
+              
+            </Select>
+          </Form.Item>
+        </Col>
       </Row>
 
       <Divider />
@@ -755,7 +762,7 @@ export default function SaleOrdersInvoice() {
 
       <Divider />
 
-      <h6 className="text-amber-500">Transport & Status</h6>
+      {/* <h6 className="text-amber-500">Transport & Status</h6>
       <Row gutter={16}>
         <Col span={6}>
           <Form.Item label={<span className="text-amber-700">Transporter</span>} name="transporter">
@@ -809,7 +816,7 @@ export default function SaleOrdersInvoice() {
             </Select>
           </Form.Item>
         </Col>
-      </Row>
+      </Row> */}
     </>
   );
 

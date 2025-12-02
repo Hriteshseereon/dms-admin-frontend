@@ -355,6 +355,16 @@ export default function AssetManager() {
             <InputNumber className="w-full" min={0} max={100} disabled={disabled} />
           </Form.Item>
         </Col>
+        <Col span={8}>
+          <Form.Item label={<span className="text-amber-700 font-medium">Depreciation Percent (%)</span>} name="depreciationRate">
+            <InputNumber className="w-full" min={0} max={100} disabled={disabled} />
+          </Form.Item>
+        </Col>
+        <Col span={8}>
+          <Form.Item label={<span className="text-amber-700 font-medium">Depreciation Value</span>} name="depreciationRate">
+            <InputNumber className="w-full" min={0} max={100} disabled={disabled} />
+          </Form.Item>
+        </Col>
       </Row>
 
       <h6 className="text-amber-500 mt-4">Additional Details</h6>

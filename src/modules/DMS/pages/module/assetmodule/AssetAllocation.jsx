@@ -26,6 +26,7 @@ export default function AssetAllocation() {
     {
       key: 1,
       allocationId: "ALLOC-001",
+      assetName: "ALLOC-001",
       assetId: "ASSET-001",
       assignedTo: "Ravi Kumar",
       allocationDate: "2024-09-01",
@@ -37,6 +38,8 @@ export default function AssetAllocation() {
     {
       key: 2,
       allocationId: "ALLOC-002",
+      assetName: "ALLOC-001",
+
       assetId: "ASSET-010",
       assignedTo: "Priya Singh",
       allocationDate: "2025-03-12",
@@ -183,7 +186,7 @@ export default function AssetAllocation() {
       return;
     }
     const headers = [
-      "Allocation ID",
+      "Asset Name",
       "Asset ID",
       "Assigned To",
       "Allocation Date",
@@ -193,7 +196,7 @@ export default function AssetAllocation() {
       "Remarks",
     ];
     const rows = data.map((r) => [
-      r.allocationId,
+      r.assetName,
       r.assetId,
       r.assignedTo,
       r.allocationDate,
@@ -219,7 +222,7 @@ export default function AssetAllocation() {
       <Row gutter={16}>
         <Col span={8}>
           <Form.Item
-            label={<span className="text-amber-700">Allocation ID</span>}
+            label={<span className="text-amber-700">Assset Name</span>}
             name="allocationId"
             rules={[{ required: true, message: "Please enter Allocation ID" }]}
           >

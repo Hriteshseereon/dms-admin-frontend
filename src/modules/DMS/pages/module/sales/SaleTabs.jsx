@@ -13,6 +13,7 @@ import SaleOrders from "./SaleOrdersInvoice";
 import SaleReturn from "./SaleReturn";
 import DeliveryStatus from "./DeliveryStatus";
 import SaleDashboard from "./SaleDashboard";
+import SalesDispute from "./SalesDispute";
 
 export const SALES_TAB_DEFINITIONS = [
   {
@@ -49,6 +50,14 @@ export const SALES_TAB_DEFINITIONS = [
     path: "return",
     Icon: FaUndo,
     Component: SaleReturn,
+  },
+   {
+    id: "dispute",
+    label: "Sale Dsipute",
+    path: "dispute",
+    Icon: FaUndo,
+    Component: SalesDispute,
+    
   },
 ];
 

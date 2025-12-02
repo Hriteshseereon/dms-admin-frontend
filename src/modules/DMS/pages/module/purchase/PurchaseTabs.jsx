@@ -35,18 +35,18 @@ export const PURCHASE_TAB_DEFINITIONS = [
     path: "invoice",
     Icon: FaFileInvoice,
   },
-  {
-    id: "loading",
-    label: "Loading Advice",
-    path: "loading",
-    Icon: FaPaperPlane,
-  },
-  {
-    id: "status",
-    label: "Delivery Status",
-    path: "status",
-    Icon: FaTruck,
-  },
+  // {
+  //   id: "loading",
+  //   label: "Loading Advice",
+  //   path: "loading",
+  //   Icon: FaPaperPlane,
+  // },
+  // {
+  //   id: "status",
+  //   label: "Delivery Status",
+  //   path: "status",
+  //   Icon: FaTruck,
+  // },
   {
     id: "return",
     label: "Return",

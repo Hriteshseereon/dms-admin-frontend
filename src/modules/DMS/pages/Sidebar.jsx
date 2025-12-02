@@ -100,7 +100,7 @@ const baseMenuItems = [
   },
   {
     key: "master-reason",
-    label: "Region Master",
+    label: "Product Group",
     path: "/dms/master/reason",
     icon: <QuestionCircleOutlined />,
     required: "master",

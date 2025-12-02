@@ -271,7 +271,7 @@ export default function AssetMaintenance() {
     <>
       <h6 className="text-amber-500">Maintenance Details</h6>
       <Row gutter={16}>
-        <Col span={8}>
+        {/* <Col span={8}>
           <Form.Item
             label={<span className="text-amber-700">Maintenance ID</span>}
             name="maintenanceId"
@@ -279,7 +279,7 @@ export default function AssetMaintenance() {
           >
             <Input placeholder="e.g. MAINT-001" disabled={disabled} />
           </Form.Item>
-        </Col>
+        </Col> */}
 
         <Col span={8}>
           <Form.Item
