@@ -28,7 +28,7 @@ export default function DMS() {
   return (
     <Routes>
       {/* All routes under DMS share the same layout */}
-      <Route path="/" element={<LayoutDMS />}>
+      <Route path="/">
         {/* Nested routes inside the Layout */}
         <Route index element={<Dashboard />} />
         {/* module routes */}

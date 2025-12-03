@@ -2,7 +2,6 @@
 import { Menu } from "antd";
 import { NavLink, useLocation } from "react-router-dom";
 import { useMemo } from "react";
-import { useAuth } from "../../../context/AuthContext";
 import {
   DashboardOutlined,
   ShoppingCartOutlined,
@@ -13,7 +12,8 @@ import {
   TeamOutlined,
   QuestionCircleOutlined,
 } from "@ant-design/icons";
-import './SidebarLayout.css'
+import '../style.css'
+import { useAuth } from "../../../context/AuthContext";
 // import Logo from "./Logo.png";
 
 // ===== Header =====

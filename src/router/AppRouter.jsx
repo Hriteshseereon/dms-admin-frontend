@@ -8,6 +8,7 @@ import AMS from "../modules/AMS";
 import OrganizationDashboard from "../pages/OrganizationDashboard";
 import OrganizationList from "../pages/OrganizationList";
 import AddOrganisation from "../pages/AddOrganisation";
+import AppLayout from "../pages/AppLayout";
 export default function AppRouter() {
   const { user } = useAuth();
 
@@ -35,7 +36,7 @@ export default function AppRouter() {
           path="/organizations"
           element={user ? <OrganizationList /> : <Navigate to="/" />}
         />
-        <Route path="/organisation/add" element={<AddOrganisation />}/>
+        <Route path="/organisation/add" element={<AddOrganisation />} />
 
         {/* Organization specific dashboard */}
         <Route
@@ -46,9 +47,11 @@ export default function AppRouter() {
 
         {/* DMS (protected) */}
 
-        <Route path="/dms/*" element={user ? <DMS /> : <Navigate to="/" />} />
-        {/* ams module */}
-        <Route path="/ams/*" element={user ? <AMS /> : <Navigate to="/" />} />
+        <Route path="/" element={<AppLayout />}>
+          <Route path="/dms/*" element={user ? <DMS /> : <Navigate to="/" />} />
+          {/* ams module */}
+          <Route path="/ams/*" element={user ? <AMS /> : <Navigate to="/" />} />
+        </Route>
 
         <Route path="*" element={<NotFound />} />
       </Routes>

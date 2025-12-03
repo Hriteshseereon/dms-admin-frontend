@@ -21,11 +21,10 @@
 // Layout.jsx
 import { Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Sidebar from "./Sidebar";
-import Navbar from "./Navbar";
-import './SidebarLayout.css'
+import Sidebar from "../components/common/Sidebar/Sidebar";
+import Navbar from "../components/common/Navbar/Navbar";
 
-const Layout = () => {
+const AppLayout = () => {
   const [sidebarWidth, setSidebarWidth] = useState(288); // default 18rem (72 * 4 = 288px)
 
   useEffect(() => {
@@ -68,4 +67,4 @@ const Layout = () => {
   );
 };
 
-export default Layout;
+export default AppLayout;
