@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { getAllowedDmsRoutesForRole } from "../../utils/permissions";
 
-import LayoutDMS from "./pages/LayoutDMS";
+// import LayoutDMS from "./pages/LayoutDMS";
 import Dashboard from "./pages/Dashboard";
 import Purchase from "./pages/module/purchase/Purchase";
 import Sales from "./pages/module/sales/Sales";

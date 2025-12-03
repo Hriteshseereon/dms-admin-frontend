@@ -12,7 +12,7 @@ import {
   TeamOutlined,
   QuestionCircleOutlined,
 } from "@ant-design/icons";
-import '../style.css'
+// import '../style.css'
 import { useAuth } from "../../../context/AuthContext";
 // import Logo from "./Logo.png";
 
@@ -63,6 +63,7 @@ const baseMenuItems = [
     label: "Purchase Module",
     path: "/dms/purchase",
     icon: <ShoppingCartOutlined />,
+    module: "dms",
     required: "purchase",
   },
   {
@@ -70,6 +71,7 @@ const baseMenuItems = [
     label: "Sales Module",
     path: "/dms/sales",
     icon: <BarChartOutlined />,
+    module: "dms",
     required: "sales",
   },
   {
@@ -77,11 +79,13 @@ const baseMenuItems = [
     label: "Reports & Analytics",
     path: "/dms/reports",
     icon: <FileTextOutlined />,
+    module: "dms",
     required: "reports",
   },
   {
     isSection: true,
     label: "Master Module",
+    module: "dms",
     required: "master",
   },
   {
@@ -89,6 +93,7 @@ const baseMenuItems = [
     label: "Product Master",
     path: "/dms/master/product",
     icon: <TagOutlined />,
+    module: "dms",
     required: "master",
   },
   {
@@ -96,6 +101,7 @@ const baseMenuItems = [
     label: "Business Partner Master",
     path: "/dms/master/business-partner",
     icon: <TeamOutlined />,
+    module: "dms",
     required: "master",
   },
   {
@@ -103,62 +109,69 @@ const baseMenuItems = [
     label: "Product Group",
     path: "/dms/master/reason",
     icon: <QuestionCircleOutlined />,
+    module: "dms",
     required: "master",
   },
   {
     isSection: true,
     label: "Asset Module",
+    module: "ams",
     required: "asset",
   },
   {
     key: "asset-product",
     label: "Asset Master",
-    path: "/dms/assetmodule",
+    path: "/ams/dashboard",
     icon: <BarChartOutlined />,
+    module: "ams",
     required: "asset",
   },
    {
     isSection: true,
     label: "Wealth Module",
+    module: "wms",
     required: "wealth",
   },
   {
     key: "wealth-product",
     label: "Wealth Master",
-    path: "/dms/wealthmodule",
+    path: "/wms/dashboard",
     icon: <BarChartOutlined />,
+    module: "wms",
     required: "wealth",
   },
 ];
 
 const SidebarMenu = () => {
   const location = useLocation();
-  const { user } = useAuth();
+  const { user, orgModules } = useAuth();
 
-  const allowedSubmodules = useMemo(() => {
-    const raw =
-      user?.role === "admin"
-        ? null
-        : user?.permissions?.DMS?.submodules || null;
+//   const allowedSubmodules = useMemo(() => {
+//     const raw =
+//       user?.role === "admin"
+//         ? null
+//         : user?.permissions?.DMS?.submodules || null;
 
-    if (!raw) return null;
+//     if (!raw) return null;
 
-    return Object.entries(raw).reduce((acc, [key, value]) => {
-      if (value?.allowed) {
-        acc.add(key.toLowerCase());
-      }
-      return acc;
-    }, new Set());
-  }, [user]);
-  const menuItems = useMemo(() => {
-    if (!allowedSubmodules || allowedSubmodules.size === 0) {
-      return baseMenuItems;
-    }
-    return baseMenuItems.filter((item) => {
-      if (!item.required) return true;
-      return allowedSubmodules.has(item.required);
-    });
-  }, [allowedSubmodules]);
+//     return Object.entries(raw).reduce((acc, [key, value]) => {
+//       if (value?.allowed) {
+//         acc.add(key.toLowerCase());
+//       }
+//       return acc;
+//     }, new Set());
+//   }, [user]);
+
+//   const menuItems = useMemo(() => {
+//     const isAllowedInOrganization = 
+//     if (!allowedSubmodules || allowedSubmodules.size === 0) {
+//       return baseMenuItems;
+//     }
+//     return baseMenuItems.filter((item) => {
+//       if (!item.required) return true;
+//       return allowedSubmodules.has(item.required);
+//     });
+//   }, [allowedSubmodules]);
 
   const getActiveKey = (pathname) => {
     if (pathname.startsWith("/dms/purchase")) return "purchase";
@@ -172,6 +185,30 @@ const SidebarMenu = () => {
   };
 
   const activeKey = getActiveKey(location.pathname);
+
+  const menuItems = baseMenuItems.filter((item) => {
+    // check if module is in orgModules
+    if (item.module && !orgModules.includes(item.module.toUpperCase())) {
+      return false;
+    }
+
+    // if admin then allow all submodules
+    if (user?.role === "admin") {
+        return true;
+    }
+
+    // check if user has permission to this module
+    if (item.required) {
+        const modulePermission = user?.permissions.find((p) => p.module.toLowerCase() === item.module);
+        if (!modulePermission) {
+            return false;
+        }
+
+        return modulePermission?.submodules?.hasOwnProperty(item.required);
+    }
+
+    return true;
+  })
 
   return (
     <Menu

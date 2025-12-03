@@ -3,7 +3,7 @@ import { BellOutlined, UserOutlined, DownOutlined } from "@ant-design/icons";
 import { Badge, Avatar, Dropdown, Menu } from "antd";
 import { useAuth } from "../../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import '../style.css'
+// import '../style.css'
 
 const Navbar = () => {
   const { user, logout } = useAuth();
