@@ -85,7 +85,7 @@
 
 /* Large screens (>= 1440px) - wide desktop */
 @media (min-width: 1440px) {
-  .sidebar { width: 20rem; }       /* 320px */
+  .sidebar { width: 19rem; }       /* 320px */
   .sidebar .sidebar-logo img { width: 260px; }
   .main-content { margin-left: 20rem; } /* keep Layout in sync */
   .outlet-content { font-size: 16px; }
