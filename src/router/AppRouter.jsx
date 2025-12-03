@@ -9,6 +9,7 @@ import OrganizationDashboard from "../pages/OrganizationDashboard";
 import OrganizationList from "../pages/OrganizationList";
 import AddOrganisation from "../pages/AddOrganisation";
 import AppLayout from "../pages/AppLayout";
+import AssetModule from "../modules/AMS/AssetModule";
 export default function AppRouter() {
   const { user } = useAuth();
 
@@ -49,8 +50,10 @@ export default function AppRouter() {
 
         <Route path="/" element={<AppLayout />}>
           <Route path="/dms/*" element={user ? <DMS /> : <Navigate to="/" />} />
-          {/* ams module */}
-          <Route path="/ams/*" element={user ? <AMS /> : <Navigate to="/" />} />
+          {/* ams module - currently imported assetmodule,
+           AMS/index.jsx is path based but we are using tab based
+          for using path based use <AMS /> */}
+          <Route path="/ams/*" element={user ? <AssetModule /> : <Navigate to="/" />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />

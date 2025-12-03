@@ -12,9 +12,9 @@ import MasterTable from "./pages/module/MasterTable/MasterTables";
 import ReportsAnalytics from "./pages/ReportsAnalytics";
 import Organisation from "./pages/Organisation";
 import ProfileSetings from "./pages/ProfileSetings";
-import AssetModuleRoutes from "./pages/module/assetmodule";
-import AssetModule from "./pages/module/assetmodule/AssetModule";
-import WealthModule from "./pages/module/wealthmodule/WealthModule";
+// import AssetModuleRoutes from "./pages/module/assetmodule";
+// import AssetModule from "./pages/module/assetmodule/AssetModule";
+// import WealthModule from "./pages/module/wealthmodule/WealthModule";
 export default function DMS() {
   const { user } = useAuth();
 
@@ -42,9 +42,9 @@ export default function DMS() {
         {/* <Route path="purchase" element={<Purchase />} /> */}
         {/* <Route path="purchasedashboard" elemelnt={<PurchaseDashboard />} />   */}
         {/* assset module routes   */}
-        <Route path="assetmodule/*" element={<AssetModule />} />
+        {/* <Route path="assetmodule/*" element={<AssetModule />} /> */}
         {/* welath routes */}
-        <Route path="wealthmodule/*" element = {<WealthModule />} /> 
+        {/* <Route path="wealthmodule/*" element = {<WealthModule />} />  */}
       </Route>
     </Routes>
   );
