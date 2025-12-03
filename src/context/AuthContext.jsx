@@ -53,8 +53,6 @@ export const AuthProvider = ({ children }) => {
     setUser(found);
 
     if (found.role === "admin") {
-      // admin sees all modules and all organisations
-      setOrgModules(modules.map((m) => m.id));
       setOrganisations(orgs);
     } else {
       // if user has explicit modules array (rare)
@@ -90,7 +88,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, login, logout, orgModules, isAdmin, organisations }}
+      value={{ user, login, logout, orgModules, isAdmin, organisations, setOrgModules }}
     >
       {children}
     </AuthContext.Provider>

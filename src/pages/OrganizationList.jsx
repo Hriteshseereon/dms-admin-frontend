@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 
 export default function OrganizationList() {
-  const { organisations, user } = useAuth();
+  const { organisations, user, setOrgModules } = useAuth();
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -132,6 +132,7 @@ export default function OrganizationList() {
                 <button
                   onClick={() => {
                     const firstModule = org.modules?.[0];
+                    setOrgModules(org.modules || []);
                     if (firstModule) {
                       navigate(`/${firstModule.toLowerCase()}`);
                     } else {
