@@ -22,7 +22,7 @@ import {
   CartesianGrid,
 } from "recharts";
 import { GrDeliver } from "react-icons/gr";
-
+import { useNavigate } from "react-router-dom";
 // ================== JSON DATA ==================
 const tailwindColors = {
   red: { bg: "bg-red-50", text: "text-red-600", subtitle: "text-red-500" },
@@ -47,18 +47,21 @@ const dashboardData = {
       value: 45,
       subtitle: "Active contracts",
       icon: <ShoppingCartOutlined className="text-amber-800 text-base" />,
+      path: "/dms/purchase/souda",
     },
     {
       title: "Active Purchase Indents",
       value: 12,
       subtitle: "Awaiting processing",
       icon: <OrderedListOutlined className="text-amber-800 text-base" />,
+      path: "/dms/purchase/indent",
     },
     {
       title: "Pending Invoices",
       value: 8,
       subtitle: "Purchase + Sales",
       icon: <FileTextOutlined className="text-amber-800 text-base" />,
+      path: "/dms/purchase/invoice",
     },
     {
       title: "Total Invoice Value",
@@ -156,6 +159,7 @@ const dashboardData = {
 
 // ================== COMPONENT ==================
 const Dashboard = () => {
+  const navigate = useNavigate();
   return (
     <div className="p-3">
       {/* Header */}
@@ -171,7 +175,16 @@ const Dashboard = () => {
         {dashboardData.overviewCards.map((card, i) => (
           <div
             key={i}
-            className="border-1 border-amber-300 rounded-lg p-3 shadow-sm"
+            role={card.path ? "button" : undefined}
+            tabIndex={card.path ? 0 : undefined}
+            onClick={() => card.path && navigate(card.path)}
+            onKeyDown={(e) => {
+              if (card.path && (e.key === "Enter" || e.key === " ")) {
+                navigate(card.path);
+              }
+            }}
+            className="border-1 border-amber-300 rounded-lg p-3 shadow-sm hover:shadow-md transition cursor-pointer"
+            style={{ outline: "none" }}
           >
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-base text-amber-800 font-semibold">

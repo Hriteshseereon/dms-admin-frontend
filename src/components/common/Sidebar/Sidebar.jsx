@@ -38,18 +38,31 @@ const SidebarHeader = () => {
         />
       </div>
       <div className="flex gap-2 mt-4 sidebar-header-tab">
-        <NavLink to="/dms" className={linkClasses("/dms")}>
-          <DashboardOutlined className="mr-2" />
-          Dashboard
-        </NavLink>
+<NavLink
+  to="/dms"
+  end
+  className={({ isActive }) =>
+    `font-semibold no-underline flex items-center px-1 py-1 rounded-md ${
+      isActive ? "bg-amber-100 text-amber-800" : "text-amber-800 hover:bg-amber-100"
+    }`
+  }
+>
+  <DashboardOutlined className="mr-2" />
+  Dashboard
+</NavLink>
 
-        <NavLink
-          to="/dms/organisation"
-          className={linkClasses("/dms/organisation")}
-        >
-          <ApartmentOutlined className="mr-2" />
-          Organisation
-        </NavLink>
+<NavLink
+  to="/dms/organisation"
+  className={({ isActive }) =>
+    `font-semibold no-underline flex items-center px-1 py-1 rounded-md ${
+      isActive ? "bg-amber-100 text-amber-800" : "text-amber-800 hover:bg-amber-100"
+    }`
+  }
+>
+  <ApartmentOutlined className="mr-2" />
+  Organisation
+</NavLink>
+
       </div>
     </div>
         </div>
@@ -83,35 +96,13 @@ const baseMenuItems = [
     required: "reports",
   },
   {
-    isSection: true,
-    label: "Master Module",
-    module: "dms",
-    required: "master",
-  },
-  {
-    key: "master-product",
-    label: "Product Master",
-    path: "/dms/master/product",
-    icon: <TagOutlined />,
-    module: "dms",
-    required: "master",
-  },
-  {
-    key: "master-business-partner",
-    label: "Business Partner Master",
-    path: "/dms/master/business-partner",
-    icon: <TeamOutlined />,
-    module: "dms",
-    required: "master",
-  },
-  {
-    key: "master-reason",
-    label: "Product Group",
-    path: "/dms/master/reason",
-    icon: <QuestionCircleOutlined />,
-    module: "dms",
-    required: "master",
-  },
+  key: "master",
+  label: "Master Data",
+  path: "/dms/mastermodule",
+  icon: <TagOutlined />,
+  module: "dms",
+  required: "master",
+},
   {
     isSection: true,
     label: "Asset Module",

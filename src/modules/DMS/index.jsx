@@ -12,6 +12,7 @@ import MasterTable from "./pages/module/MasterTable/MasterTables";
 import ReportsAnalytics from "./pages/ReportsAnalytics";
 import Organisation from "./pages/Organisation";
 import ProfileSetings from "./pages/ProfileSetings";
+import MasterModule from "./pages/module/Master/MasterModule";
 // import AssetModuleRoutes from "./pages/module/assetmodule";
 // import AssetModule from "./pages/module/assetmodule/AssetModule";
 // import WealthModule from "./pages/module/wealthmodule/WealthModule";
@@ -35,6 +36,7 @@ export default function DMS() {
         <Route path="purchase/*" element={<Purchase />} />
         <Route path="sales/*" element={<Sales />} />
         <Route path="master/*" element={<MasterTable />} />
+        <Route path="mastermodule/*" element={<MasterModule />} />
         <Route path="reports/*" element={<ReportsAnalytics />} />
         <Route path="organisation" element={<Organisation />} />
         <Route path="settings/*" element={<ProfileSetings />} />
