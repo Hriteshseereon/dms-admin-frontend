@@ -75,7 +75,7 @@ export const getVisibleAssetTabs = (allowedTabs) => {
   return filtered.length > 0 ? filtered : ASSET_TAB_DEFINITIONS;
 };
 
-const AssetTab = ({ allowedTabs }) => {
+const AssetModule = ({ allowedTabs }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -113,7 +113,7 @@ const AssetTab = ({ allowedTabs }) => {
 
     // ensure the URL reflects the derivedActiveTab (only navigate when different)
     const tabObj = visibleTabs.find((t) => t.id === derivedActiveTab) ?? defaultTab;
-    const destination = tabObj.path === "" ? "/dms/assetmodule" : `/dms/assetmodule/${tabObj.path}`;
+    const destination = tabObj.path === "" ? "/ams/dashboard" : `/ams/${tabObj.path}`;
 
     if (location.pathname !== destination) {
       // use replace on initial sync to avoid extra history entry if you prefer:
@@ -126,7 +126,7 @@ const AssetTab = ({ allowedTabs }) => {
     const selected = visibleTabs.find((tab) => tab.id === key);
     if (!selected) return;
     setActiveKey(key);
-    const destination = selected.path === "" ? "/dms/assetmodule" : `/dms/assetmodule/${selected.path}`;
+    const destination = selected.path === "" ? "/ams/dashboard" : `/ams/${selected.path}`;
     // navigate on user click
     navigate(destination);
   };
@@ -162,4 +162,4 @@ const AssetTab = ({ allowedTabs }) => {
   );
 };
 
-export default AssetTab;
+export default AssetModule;

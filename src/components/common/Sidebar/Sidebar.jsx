@@ -2,7 +2,6 @@
 import { Menu } from "antd";
 import { NavLink, useLocation } from "react-router-dom";
 import { useMemo } from "react";
-import { useAuth } from "../../../context/AuthContext";
 import {
   DashboardOutlined,
   ShoppingCartOutlined,
@@ -13,7 +12,8 @@ import {
   TeamOutlined,
   QuestionCircleOutlined,
 } from "@ant-design/icons";
-import './SidebarLayout.css'
+// import '../style.css'
+import { useAuth } from "../../../context/AuthContext";
 // import Logo from "./Logo.png";
 
 // ===== Header =====
@@ -28,31 +28,47 @@ const SidebarHeader = () => {
     }`;
 
   return (
-        <div className="sidebar-header">
-           <div className="flex flex-col items-start p-4 border-b border-gray-200">
-      <div className="flex items-center space-x-2 flex-nowrap">
-        <img
-          src="https://res.cloudinary.com/dfm1xhhwx/image/upload/v1763008447/Aumlogo_gvleis.jpg"
-          className="h-30 w-60 "
-          alt="Logo"
-        />
-      </div>
-      <div className="flex gap-2 mt-4 sidebar-header-tab">
-        <NavLink to="/dms" className={linkClasses("/dms")}>
-          <DashboardOutlined className="mr-2" />
-          Dashboard
-        </NavLink>
+    <div className="sidebar-header">
+      <div className="flex flex-col items-start p-4 border-b border-gray-200">
+        <div className="flex items-center space-x-2 ">
+          <img
+            src="https://res.cloudinary.com/dfm1xhhwx/image/upload/v1763008447/Aumlogo_gvleis.jpg"
+            className="h-30 w-60 "
+            alt="Logo"
+          />
+        </div>
+        <div className="flex gap-2 mt-4 sidebar-header-tab">
+          {/* <NavLink
+            to="/dms"
+            end
+            className={({ isActive }) =>
+              `font-semibold no-underline flex items-center px-1 py-1 rounded-md ${
+                isActive
+                  ? "bg-amber-100 text-amber-800"
+                  : "text-amber-800 hover:bg-amber-100"
+              }`
+            }
+          >
+            <DashboardOutlined className="mr-2" />
+            Dashboard
+          </NavLink> */}
 
-        <NavLink
-          to="/dms/organisation"
-          className={linkClasses("/dms/organisation")}
-        >
-          <ApartmentOutlined className="mr-2" />
-          Organisation
-        </NavLink>
+          <NavLink
+            to="/dms/organisation"
+            className={({ isActive }) =>
+              `font-semibold no-underline flex items-center px-1 py-1 rounded-md ${
+                isActive
+                  ? "bg-amber-100 text-amber-800"
+                  : "text-amber-800 hover:bg-amber-100"
+              }`
+            }
+          >
+            <ApartmentOutlined className="mr-2" />
+            Organisation
+          </NavLink>
+        </div>
       </div>
     </div>
-        </div>
   );
 };
 
@@ -63,6 +79,7 @@ const baseMenuItems = [
     label: "Purchase Module",
     path: "/dms/purchase",
     icon: <ShoppingCartOutlined />,
+    module: "dms",
     required: "purchase",
   },
   {
@@ -70,6 +87,7 @@ const baseMenuItems = [
     label: "Sales Module",
     path: "/dms/sales",
     icon: <BarChartOutlined />,
+    module: "dms",
     required: "sales",
   },
   {
@@ -77,88 +95,77 @@ const baseMenuItems = [
     label: "Reports & Analytics",
     path: "/dms/reports",
     icon: <FileTextOutlined />,
+    module: "dms",
     required: "reports",
   },
   {
-    isSection: true,
-    label: "Master Module",
-    required: "master",
-  },
-  {
-    key: "master-product",
-    label: "Product Master",
-    path: "/dms/master/product",
+    key: "master",
+    label: "Master Data",
+    path: "/dms/mastermodule",
     icon: <TagOutlined />,
-    required: "master",
-  },
-  {
-    key: "master-business-partner",
-    label: "Business Partner Master",
-    path: "/dms/master/business-partner",
-    icon: <TeamOutlined />,
-    required: "master",
-  },
-  {
-    key: "master-reason",
-    label: "Product Group",
-    path: "/dms/master/reason",
-    icon: <QuestionCircleOutlined />,
+    module: "dms",
     required: "master",
   },
   {
     isSection: true,
     label: "Asset Module",
+    module: "ams",
     required: "asset",
   },
   {
     key: "asset-product",
     label: "Asset Master",
-    path: "/dms/assetmodule",
+    path: "/ams/dashboard",
     icon: <BarChartOutlined />,
+    module: "ams",
     required: "asset",
   },
-   {
+  {
     isSection: true,
     label: "Wealth Module",
+    module: "wms",
     required: "wealth",
   },
   {
     key: "wealth-product",
     label: "Wealth Master",
-    path: "/dms/wealthmodule",
+    path: "/wms/dashboard",
     icon: <BarChartOutlined />,
+    module: "wms",
     required: "wealth",
   },
 ];
 
 const SidebarMenu = () => {
   const location = useLocation();
-  const { user } = useAuth();
+  const { user, orgModules } = useAuth();
 
-  const allowedSubmodules = useMemo(() => {
-    const raw =
-      user?.role === "admin"
-        ? null
-        : user?.permissions?.DMS?.submodules || null;
+  //   const allowedSubmodules = useMemo(() => {
+  //     const raw =
+  //       user?.role === "admin"
+  //         ? null
+  //         : user?.permissions?.DMS?.submodules || null;
 
-    if (!raw) return null;
+  //     if (!raw) return null;
 
-    return Object.entries(raw).reduce((acc, [key, value]) => {
-      if (value?.allowed) {
-        acc.add(key.toLowerCase());
-      }
-      return acc;
-    }, new Set());
-  }, [user]);
-  const menuItems = useMemo(() => {
-    if (!allowedSubmodules || allowedSubmodules.size === 0) {
-      return baseMenuItems;
-    }
-    return baseMenuItems.filter((item) => {
-      if (!item.required) return true;
-      return allowedSubmodules.has(item.required);
-    });
-  }, [allowedSubmodules]);
+  //     return Object.entries(raw).reduce((acc, [key, value]) => {
+  //       if (value?.allowed) {
+  //         acc.add(key.toLowerCase());
+  //       }
+  //       return acc;
+  //     }, new Set());
+  //   }, [user]);
+
+  //   const menuItems = useMemo(() => {
+  //     const isAllowedInOrganization =
+  //     if (!allowedSubmodules || allowedSubmodules.size === 0) {
+  //       return baseMenuItems;
+  //     }
+  //     return baseMenuItems.filter((item) => {
+  //       if (!item.required) return true;
+  //       return allowedSubmodules.has(item.required);
+  //     });
+  //   }, [allowedSubmodules]);
 
   const getActiveKey = (pathname) => {
     if (pathname.startsWith("/dms/purchase")) return "purchase";
@@ -172,6 +179,32 @@ const SidebarMenu = () => {
   };
 
   const activeKey = getActiveKey(location.pathname);
+
+  const menuItems = baseMenuItems.filter((item) => {
+    // check if module is in orgModules
+    if (item.module && !orgModules.includes(item.module.toUpperCase())) {
+      return false;
+    }
+
+    // if admin then allow all submodules
+    if (user?.role === "admin") {
+      return true;
+    }
+
+    // check if user has permission to this module
+    if (item.required) {
+      const modulePermission = user?.permissions.find(
+        (p) => p.module.toLowerCase() === item.module
+      );
+      if (!modulePermission) {
+        return false;
+      }
+
+      return modulePermission?.submodules?.hasOwnProperty(item.required);
+    }
+
+    return true;
+  });
 
   return (
     <Menu

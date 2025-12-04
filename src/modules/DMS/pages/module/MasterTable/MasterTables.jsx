@@ -16,13 +16,13 @@ import {
 import Organisation from "./Organisation"; 
 import Branch from "./Branch";
 import Depto from "./Depot";
-import Product from "./Product";
-import Business from "./Business";
+// import Product from "./Product";
+// import Business from "./Business";
 import Location from "./Location";
 import Series from "./Series";
 
 import UseRole  from "./UserRole";
-import ProductGroupMaster from "./ProductGroupMaster";
+// import ProductGroupMaster from "./ProductGroupMaster";
 
 export default function MasterTables() {
   const location = useLocation();
@@ -32,11 +32,8 @@ export default function MasterTables() {
     organisation: { component: <Organisation />, title: "Organisation Master", icon: <ApartmentOutlined className="text-amber-700 mr-2" /> },
     branch: { component: <Branch />, title: "Branch Master", icon: <BranchesOutlined className="text-amber-700 mr-2" /> },
     depto: { component: <Depto />, title: "Depto Master", icon: <DatabaseOutlined className="text-amber-700 mr-2" /> },
-    product: { component: <Product />, title: "Product Master", icon: <TagOutlined className="text-amber-700 mr-2" /> },
-    "business-partner": { component: <Business />, title: "Business Master", icon: <TeamOutlined className="text-amber-700 mr-2" /> },
     location: { component: <Location />, title: "Location Master", icon: <EnvironmentOutlined className="text-amber-700 mr-2" /> },
     series: { component: <Series />, title: "Series Master", icon: <OrderedListOutlined className="text-amber-700 mr-2" /> },
-    reason: { component: <ProductGroupMaster />, title: "Product Group", icon: <QuestionCircleOutlined className="text-amber-700 mr-2" /> },
     "user-role": { component: <UseRole />, title: "User & Role Master", icon: <UserOutlined className="text-amber-700 mr-2" /> },
   };
 
