@@ -28,44 +28,47 @@ const SidebarHeader = () => {
     }`;
 
   return (
-        <div className="sidebar-header">
-           <div className="flex flex-col items-start p-4 border-b border-gray-200">
-      <div className="flex items-center space-x-2 ">
-        <img
-          src="https://res.cloudinary.com/dfm1xhhwx/image/upload/v1763008447/Aumlogo_gvleis.jpg"
-          className="h-30 w-60 "
-          alt="Logo"
-        />
-      </div>
-      <div className="flex gap-2 mt-4 sidebar-header-tab">
-<NavLink
-  to="/dms"
-  end
-  className={({ isActive }) =>
-    `font-semibold no-underline flex items-center px-1 py-1 rounded-md ${
-      isActive ? "bg-amber-100 text-amber-800" : "text-amber-800 hover:bg-amber-100"
-    }`
-  }
->
-  <DashboardOutlined className="mr-2" />
-  Dashboard
-</NavLink>
+    <div className="sidebar-header">
+      <div className="flex flex-col items-start p-4 border-b border-gray-200">
+        <div className="flex items-center space-x-2 ">
+          <img
+            src="https://res.cloudinary.com/dfm1xhhwx/image/upload/v1763008447/Aumlogo_gvleis.jpg"
+            className="h-30 w-60 "
+            alt="Logo"
+          />
+        </div>
+        <div className="flex gap-2 mt-4 sidebar-header-tab">
+          {/* <NavLink
+            to="/dms"
+            end
+            className={({ isActive }) =>
+              `font-semibold no-underline flex items-center px-1 py-1 rounded-md ${
+                isActive
+                  ? "bg-amber-100 text-amber-800"
+                  : "text-amber-800 hover:bg-amber-100"
+              }`
+            }
+          >
+            <DashboardOutlined className="mr-2" />
+            Dashboard
+          </NavLink> */}
 
-<NavLink
-  to="/dms/organisation"
-  className={({ isActive }) =>
-    `font-semibold no-underline flex items-center px-1 py-1 rounded-md ${
-      isActive ? "bg-amber-100 text-amber-800" : "text-amber-800 hover:bg-amber-100"
-    }`
-  }
->
-  <ApartmentOutlined className="mr-2" />
-  Organisation
-</NavLink>
-
+          <NavLink
+            to="/dms/organisation"
+            className={({ isActive }) =>
+              `font-semibold no-underline flex items-center px-1 py-1 rounded-md ${
+                isActive
+                  ? "bg-amber-100 text-amber-800"
+                  : "text-amber-800 hover:bg-amber-100"
+              }`
+            }
+          >
+            <ApartmentOutlined className="mr-2" />
+            Organisation
+          </NavLink>
+        </div>
       </div>
     </div>
-        </div>
   );
 };
 
@@ -96,13 +99,13 @@ const baseMenuItems = [
     required: "reports",
   },
   {
-  key: "master",
-  label: "Master Data",
-  path: "/dms/mastermodule",
-  icon: <TagOutlined />,
-  module: "dms",
-  required: "master",
-},
+    key: "master",
+    label: "Master Data",
+    path: "/dms/mastermodule",
+    icon: <TagOutlined />,
+    module: "dms",
+    required: "master",
+  },
   {
     isSection: true,
     label: "Asset Module",
@@ -117,7 +120,7 @@ const baseMenuItems = [
     module: "ams",
     required: "asset",
   },
-   {
+  {
     isSection: true,
     label: "Wealth Module",
     module: "wms",
@@ -137,32 +140,32 @@ const SidebarMenu = () => {
   const location = useLocation();
   const { user, orgModules } = useAuth();
 
-//   const allowedSubmodules = useMemo(() => {
-//     const raw =
-//       user?.role === "admin"
-//         ? null
-//         : user?.permissions?.DMS?.submodules || null;
+  //   const allowedSubmodules = useMemo(() => {
+  //     const raw =
+  //       user?.role === "admin"
+  //         ? null
+  //         : user?.permissions?.DMS?.submodules || null;
 
-//     if (!raw) return null;
+  //     if (!raw) return null;
 
-//     return Object.entries(raw).reduce((acc, [key, value]) => {
-//       if (value?.allowed) {
-//         acc.add(key.toLowerCase());
-//       }
-//       return acc;
-//     }, new Set());
-//   }, [user]);
+  //     return Object.entries(raw).reduce((acc, [key, value]) => {
+  //       if (value?.allowed) {
+  //         acc.add(key.toLowerCase());
+  //       }
+  //       return acc;
+  //     }, new Set());
+  //   }, [user]);
 
-//   const menuItems = useMemo(() => {
-//     const isAllowedInOrganization = 
-//     if (!allowedSubmodules || allowedSubmodules.size === 0) {
-//       return baseMenuItems;
-//     }
-//     return baseMenuItems.filter((item) => {
-//       if (!item.required) return true;
-//       return allowedSubmodules.has(item.required);
-//     });
-//   }, [allowedSubmodules]);
+  //   const menuItems = useMemo(() => {
+  //     const isAllowedInOrganization =
+  //     if (!allowedSubmodules || allowedSubmodules.size === 0) {
+  //       return baseMenuItems;
+  //     }
+  //     return baseMenuItems.filter((item) => {
+  //       if (!item.required) return true;
+  //       return allowedSubmodules.has(item.required);
+  //     });
+  //   }, [allowedSubmodules]);
 
   const getActiveKey = (pathname) => {
     if (pathname.startsWith("/dms/purchase")) return "purchase";
@@ -185,21 +188,23 @@ const SidebarMenu = () => {
 
     // if admin then allow all submodules
     if (user?.role === "admin") {
-        return true;
+      return true;
     }
 
     // check if user has permission to this module
     if (item.required) {
-        const modulePermission = user?.permissions.find((p) => p.module.toLowerCase() === item.module);
-        if (!modulePermission) {
-            return false;
-        }
+      const modulePermission = user?.permissions.find(
+        (p) => p.module.toLowerCase() === item.module
+      );
+      if (!modulePermission) {
+        return false;
+      }
 
-        return modulePermission?.submodules?.hasOwnProperty(item.required);
+      return modulePermission?.submodules?.hasOwnProperty(item.required);
     }
 
     return true;
-  })
+  });
 
   return (
     <Menu
