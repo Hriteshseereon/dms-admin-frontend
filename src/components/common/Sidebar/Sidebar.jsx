@@ -30,7 +30,7 @@ const SidebarHeader = () => {
   return (
         <div className="sidebar-header">
            <div className="flex flex-col items-start p-4 border-b border-gray-200">
-      <div className="flex items-center space-x-2 flex-nowrap">
+      <div className="flex items-center space-x-2 ">
         <img
           src="https://res.cloudinary.com/dfm1xhhwx/image/upload/v1763008447/Aumlogo_gvleis.jpg"
           className="h-30 w-60 "

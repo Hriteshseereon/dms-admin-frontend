@@ -10,6 +10,7 @@ import OrganizationList from "../pages/OrganizationList";
 import AddOrganisation from "../pages/AddOrganisation";
 import AppLayout from "../pages/AppLayout";
 import AssetModule from "../modules/AMS/AssetModule";
+import WealthModule from "../modules/WMS/WealthModule";
 export default function AppRouter() {
   const { user } = useAuth();
 
@@ -54,6 +55,8 @@ export default function AppRouter() {
            AMS/index.jsx is path based but we are using tab based
           for using path based use <AMS /> */}
           <Route path="/ams/*" element={user ? <AssetModule /> : <Navigate to="/" />} />
+          <Route path="/wms/*" element={user ? <WealthModule /> : <Navigate to="/" />} />
+
         </Route>
 
         <Route path="*" element={<NotFound />} />

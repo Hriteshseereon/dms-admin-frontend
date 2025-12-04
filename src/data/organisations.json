@@ -2,7 +2,7 @@
   {
     "id": "Org12",
     "name": "Org12 Pvt Ltd",
-    "modules": ["DMS", "AMS"]
+    "modules": ["DMS", "AMS","WMS"]
   },
   {
     "id": "Org3",
