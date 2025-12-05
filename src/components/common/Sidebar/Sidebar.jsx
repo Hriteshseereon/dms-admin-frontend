@@ -12,13 +12,57 @@ import {
   TeamOutlined,
   QuestionCircleOutlined,
 } from "@ant-design/icons";
-// import '../style.css'
 import { useAuth } from "../../../context/AuthContext";
-// import Logo from "./Logo.png";
+
+// ===== Helper: pick preferred module =====
+const pickPreferredModule = (orgModules = []) => {
+  // Normalize into lowercase strings
+  const norms = (Array.isArray(orgModules) ? orgModules : [])
+    .map((m) => {
+      if (!m) return null;
+      if (typeof m === "string") return m.toLowerCase();
+      if (typeof m === "object") {
+        const candidate = m.key || m.module || m.name || m.id;
+        return candidate ? String(candidate).toLowerCase() : null;
+      }
+      return null;
+    })
+    .filter(Boolean);
+
+  // Priority order: DMS -> AMS -> WMS
+  if (norms.includes("dms")) return "dms";
+  if (norms.includes("ams")) return "ams";
+  if (norms.includes("wms")) return "wms";
+
+  return null;
+};
 
 // ===== Header =====
 const SidebarHeader = () => {
   const location = useLocation();
+  const { orgModules } = useAuth();
+
+  // determine preferred module once
+  const preferredModule = useMemo(() => pickPreferredModule(orgModules), [orgModules]);
+
+  // map preferred module to routes for dashboard & organisation
+  const dashboardRoute =
+    preferredModule === "dms"
+      ? "/dms"
+      : preferredModule === "ams"
+      ? "/ams/dashboard"
+      : preferredModule === "wms"
+      ? "/wms/dashboard"
+      : "/dashboard"; // fallback
+
+  const organisationRoute =
+    preferredModule === "dms"
+      ? "/dms/organisation"
+      : preferredModule === "ams"
+      ? "/dms/organisation"
+      : preferredModule === "wms"
+      ? "/dms/organisation"
+      : "/organisation";
 
   const linkClasses = (path) =>
     `font-semibold no-underline flex items-center px-1 py-1 rounded-md ${
@@ -38,8 +82,8 @@ const SidebarHeader = () => {
           />
         </div>
         <div className="flex gap-2 mt-4 sidebar-header-tab">
-          {/* <NavLink
-            to="/dms"
+          <NavLink
+            to={dashboardRoute}
             end
             className={({ isActive }) =>
               `font-semibold no-underline flex items-center px-1 py-1 rounded-md ${
@@ -51,10 +95,10 @@ const SidebarHeader = () => {
           >
             <DashboardOutlined className="mr-2" />
             Dashboard
-          </NavLink> */}
+          </NavLink>
 
           <NavLink
-            to="/dms/organisation"
+            to={organisationRoute}
             className={({ isActive }) =>
               `font-semibold no-underline flex items-center px-1 py-1 rounded-md ${
                 isActive
@@ -140,33 +184,6 @@ const SidebarMenu = () => {
   const location = useLocation();
   const { user, orgModules } = useAuth();
 
-  //   const allowedSubmodules = useMemo(() => {
-  //     const raw =
-  //       user?.role === "admin"
-  //         ? null
-  //         : user?.permissions?.DMS?.submodules || null;
-
-  //     if (!raw) return null;
-
-  //     return Object.entries(raw).reduce((acc, [key, value]) => {
-  //       if (value?.allowed) {
-  //         acc.add(key.toLowerCase());
-  //       }
-  //       return acc;
-  //     }, new Set());
-  //   }, [user]);
-
-  //   const menuItems = useMemo(() => {
-  //     const isAllowedInOrganization =
-  //     if (!allowedSubmodules || allowedSubmodules.size === 0) {
-  //       return baseMenuItems;
-  //     }
-  //     return baseMenuItems.filter((item) => {
-  //       if (!item.required) return true;
-  //       return allowedSubmodules.has(item.required);
-  //     });
-  //   }, [allowedSubmodules]);
-
   const getActiveKey = (pathname) => {
     if (pathname.startsWith("/dms/purchase")) return "purchase";
     if (pathname.startsWith("/dms/sales")) return "sales";
@@ -175,6 +192,8 @@ const SidebarMenu = () => {
     if (pathname.startsWith("/dms/master/business-partner"))
       return "master-business-partner";
     if (pathname.startsWith("/dms/master/reason")) return "master-reason";
+    if (pathname.startsWith("/ams")) return "asset-product";
+    if (pathname.startsWith("/wms")) return "wealth-product";
     return "";
   };
 
@@ -182,8 +201,15 @@ const SidebarMenu = () => {
 
   const menuItems = baseMenuItems.filter((item) => {
     // check if module is in orgModules
-    if (item.module && !orgModules.includes(item.module.toUpperCase())) {
-      return false;
+    if (item.module) {
+      // safe-check: normalize orgModules to uppercase if it's an array of strings/objects
+      const modulesNormalized = Array.isArray(orgModules)
+        ? orgModules.map((m) => (typeof m === "string" ? m.toUpperCase() : (m.key || m.module || m.name || "").toUpperCase()))
+        : [];
+
+      if (modulesNormalized.length > 0 && !modulesNormalized.includes(item.module.toUpperCase())) {
+        return false;
+      }
     }
 
     // if admin then allow all submodules
@@ -193,14 +219,24 @@ const SidebarMenu = () => {
 
     // check if user has permission to this module
     if (item.required) {
-      const modulePermission = user?.permissions.find(
-        (p) => p.module.toLowerCase() === item.module
-      );
+      const modulePermission = Array.isArray(user?.permissions)
+        ? user.permissions.find((p) => (p.module || "").toLowerCase() === item.module)
+        : user?.permissions?.[item.module?.toUpperCase?.()] || null;
+
       if (!modulePermission) {
         return false;
       }
 
-      return modulePermission?.submodules?.hasOwnProperty(item.required);
+      // support both object submodules or map of flags
+      const subs = modulePermission?.submodules || modulePermission?.submodule || {};
+      if (Array.isArray(subs)) {
+        return subs.includes(item.required);
+      }
+      if (typeof subs === "object") {
+        return !!subs[item.required];
+      }
+
+      return false;
     }
 
     return true;

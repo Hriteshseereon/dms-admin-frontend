@@ -13,5 +13,10 @@
     "id": "Org1",
     "name": "Org1 Technologies",
     "modules": ["DMS"]
+  },
+   {
+    "id": "Org11",
+    "name": "Org11 Technologies",
+    "modules": ["AMS"]
   }
 ]
