@@ -271,16 +271,16 @@ export default function Business() {
         </Col>
 
         <Col span={4}>
-          <Form.Item label="Branch Name" name="branchName">
-            <Input disabled={disabled} placeholder="Enter Branch Name" />
+          <Form.Item label="Business Name" name="branchName">
+            <Input disabled={disabled} placeholder="Enter Business Name" />
           </Form.Item>
         </Col>
 
-        <Col span={4}>
+        {/* <Col span={4}>
           <Form.Item label="Broker Name" name="brokerName">
             <Input disabled={disabled} placeholder="Enter Broker Name" />
           </Form.Item>
-        </Col>
+        </Col> */}
         <Col span={4}>
           <Form.Item label="Phone No" name="phoneNo">
             <Input disabled={disabled} placeholder="Enter Phone Number" />

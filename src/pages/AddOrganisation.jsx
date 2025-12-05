@@ -217,7 +217,7 @@ export default function AddOrganisation() {
         <div className="bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden">
           <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-gray-800">Add Organisation</h1>
+              <h1 className="text-2xl font-bold text-amber-700">Add Organisation</h1>
               <p className="text-sm text-gray-500 mt-1">Fill in organisation, owner, business and branch details</p>
             </div>
             <div className="flex items-center gap-3">
@@ -234,7 +234,7 @@ export default function AddOrganisation() {
           <form onSubmit={handleSubmit} className="p-6 space-y-6">
             {/* Organisation Details */}
             <section className="space-y-3">
-              <h2 className="text-lg font-semibold text-gray-800">Organisation Details</h2>
+              <h2 className="text-lg font-semibold text-amber-700">Organisation Details</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Registered Name *</label>
@@ -314,7 +314,7 @@ export default function AddOrganisation() {
             {/* Owner Details */}
             <section className="space-y-3">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold text-gray-800">Owner / Members</h2>
+                <h2 className="text-lg font-semibold text-amber-700">Owner / Members</h2>
                 <button
                   type="button"
                   onClick={addMember}
@@ -379,6 +379,8 @@ export default function AddOrganisation() {
 
               {/* Members repeatable list */}
               <div className="space-y-4">
+                <h5 className="text-amber-700 font-semibold">Partner Details (Optional)</h5>
+
                 {form.members.map((m, i) => (
                   <div key={i} className="p-4 border rounded-lg bg-amber-50/40 relative">
                     {form.members.length > 1 && (
@@ -443,7 +445,7 @@ export default function AddOrganisation() {
 
             {/* Business Details */}
             <section className="space-y-3">
-              <h2 className="text-lg font-semibold text-gray-800">Business Details</h2>
+              <h2 className="text-lg font-semibold text-amber-700">Business Details</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                   <label className="block text-sm text-gray-700 mb-1">Tin No</label>
@@ -551,7 +553,7 @@ export default function AddOrganisation() {
             {/* Branch Details - repeatable */}
             <section className="space-y-3">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold text-gray-800">Branch Details</h2>
+                <h2 className="text-lg font-semibold text-amber-700">Branch Details (optional)</h2>
                 <button
                   type="button"
                   onClick={addBranch}
@@ -670,7 +672,7 @@ export default function AddOrganisation() {
             {/* Depo / Godown Details - repeatable */}
             <section className="space-y-3">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold text-gray-800">Depo / Godown Details</h2>
+                <h2 className="text-lg font-semibold text-amber-700">Depo / Godown Details</h2>
                 <button
                   type="button"
                   onClick={addDepo}
@@ -798,7 +800,7 @@ export default function AddOrganisation() {
 
             {/* Modules (checkboxes) */}
             <section className="space-y-3">
-              <h2 className="text-lg font-semibold text-gray-800">Enable Modules</h2>
+              <h2 className="text-lg font-semibold text-amber-700">Enable Modules</h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 {modulesList.map((m) => (
                   <label key={m.id} className="flex items-center gap-2 p-2 border rounded-lg cursor-pointer">
