@@ -23,11 +23,11 @@ export default function BrokerForm({ disabled = false }) {
           </Form.Item>
         </Col>
 
-        <Col span={4}>
+        {/* <Col span={4}>
           <Form.Item label="Broker ID" name="brokerId">
             <Input disabled={disabled} placeholder="Enter Broker ID" />
           </Form.Item>
-        </Col>
+        </Col> */}
 
         <Col span={4}>
           <Form.Item label="Address Line 1" name="address1">

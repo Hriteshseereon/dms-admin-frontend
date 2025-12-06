@@ -20,11 +20,11 @@ export default function TransportForm({ disabled = false }) {
           </Form.Item>
         </Col>
 
-        <Col span={4}>
+        {/* <Col span={4}>
           <Form.Item label="Transport ID" name="transportId">
             <Input disabled={disabled} placeholder="Enter Transport ID" />
           </Form.Item>
-        </Col>
+        </Col> */}
 
         <Col span={4}>
           <Form.Item label="User ID" name="userId">

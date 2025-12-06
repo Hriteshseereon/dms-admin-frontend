@@ -26,6 +26,7 @@ import CustomerForm from "./CustomerForm";
 import VendorForm from "./VendorForm";
 import TransportForm from "./TransportForm";
 import BrokerForm from "./BrokerForm";
+import InventoryForm from "./InventoryForm";
 
 const { Option } = Select;
 
@@ -114,13 +115,14 @@ const businessDataJSON = [
   // You can add sample Transport records here if you want.
 ].map((record) => parseDateFields(record));
 
-const FORM_TYPES = ["Customer", "Vendor", "Transport", "Broker"];
+const FORM_TYPES = ["Customer", "Vendor", "Transport", "Broker", "Inventory"];
 
 const FORM_COMPONENTS = {
   Customer: CustomerForm,
   Vendor: VendorForm,
   Transport: TransportForm,
   Broker: BrokerForm,
+  Inventory: InventoryForm, // Placeholder, replace with actual InventoryForm if needed
 };
 
 export default function Business() {
