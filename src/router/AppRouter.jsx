@@ -5,6 +5,7 @@ import Dashboard from "../pages/Dashboard";
 import NotFound from "../pages/NotFound";
 import DMS from "../modules/DMS";
 import AMS from "../modules/AMS";
+import WMS from "../modules/WMS";
 import OrganizationDashboard from "../pages/OrganizationDashboard";
 import OrganizationList from "../pages/OrganizationList";
 import AddOrganisation from "../pages/AddOrganisation";
@@ -56,7 +57,6 @@ export default function AppRouter() {
           for using path based use <AMS /> */}
           <Route path="/ams/*" element={user ? <AssetModule /> : <Navigate to="/" />} />
           <Route path="/wms/*" element={user ? <WealthModule /> : <Navigate to="/" />} />
-
         </Route>
 
         <Route path="*" element={<NotFound />} />
